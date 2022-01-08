@@ -1,11 +1,10 @@
 // load saved local storage
-// add classes to color code time block based on time of day
 
 // uses moment to get current day and format
 var currentDate = moment().format("dddd, MMM Do, YYYY");
 var currentTime = moment().format('L');
 
-// holds tasks
+// holds event
 var tasks = {};
 
 $("#currentDay").text(currentDate);
@@ -49,6 +48,7 @@ var createTimeblock = function (setHour) {
 
 // create the calendar
 var createSchedule = function () {
+    // Variable is used to set standard business hour
     var setHour = 9;
     for (i = 0; i < 9; i++) {
         createTimeblock(setHour);
@@ -65,7 +65,6 @@ $(".time-block").on("click", ".saveBtn", function () {
         .children("textarea")
         .val()
         .trim();
-
     tasks[index] = ({
         index: index,
         text: text
@@ -82,6 +81,27 @@ $(".time-block").on("click", ".saveBtn", function () {
 // performs the save to local storage
 var save = function () {
     localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+};
+
+var load = function () {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    if (!tasks) {
+        tasks = ({
+            index: [],
+            text: []
+        });
+    };
+    $.each(tasks, function (list, arr) {
+        console.log(list, arr);
+        console.log(list);
+        console.log(arr.text);
+
+        $("textarea").eq(list).val(arr.text);
+
+    })
+
+};
 
 createSchedule();
+load();
