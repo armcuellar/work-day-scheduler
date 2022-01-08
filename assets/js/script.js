@@ -12,6 +12,7 @@ $("#currentDay").text(currentDate);
 
 // creates time block for standard business hours
 var createTimeblock = function (setHour) {
+    // set the hours for the scheduler
     var currentHour = moment().hour(setHour);
 
     var timeblock = $("<li>")
@@ -22,11 +23,23 @@ var createTimeblock = function (setHour) {
         .text(currentHour.format("hA"));
 
     var taskTextArea = $("<textarea>")
-        .addClass("description col-10")
+        .addClass("description col-10");
 
     var savebtn = $("<button>")
         .addClass("saveBtn col-1")
         .text("save");
+
+    // compares set time with current time and sets class
+    if (currentHour.isSame(moment())) {
+        taskTextArea.addClass("present");
+    }
+    else if (currentHour.isBefore(moment())) {
+        taskTextArea.addClass("past");
+    }
+    else if (currentHour.isAfter(moment())) {
+        taskTextArea.addClass("future");
+    };
+
 
     timeblock.append(hourSlot, taskTextArea, savebtn);
 
