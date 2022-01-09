@@ -1,5 +1,3 @@
-// load saved local storage
-
 // uses moment to get current day and format
 var currentDate = moment().format("dddd, MMM Do, YYYY");
 var currentTime = moment().format('L');
