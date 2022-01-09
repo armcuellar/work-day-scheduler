@@ -26,7 +26,7 @@ var createTimeblock = function (setHour) {
 
     var savebtn = $("<button>")
         .addClass("saveBtn col-1")
-        .text("save");
+        .html("<i class='bi bi-save'></i>");
 
     // compares set time with current time and sets class
     if (currentHour.isSame(moment())) {
@@ -69,11 +69,7 @@ $(".time-block").on("click", ".saveBtn", function () {
         index: index,
         text: text
     });
-    // console log to check if it works
-    console.log("successfully clicked");
-    console.log(index);
-    console.log(text);
-    console.log(this.parentNode)
+
     save();
 
 });
@@ -83,6 +79,7 @@ var save = function () {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
+// loads localstorage to page
 var load = function () {
     tasks = JSON.parse(localStorage.getItem("tasks"));
 
@@ -92,13 +89,10 @@ var load = function () {
             text: []
         });
     };
+
     $.each(tasks, function (list, arr) {
-        console.log(list, arr);
-        console.log(list);
-        console.log(arr.text);
-
+        // finds the index in the list item and replaces text area with saved text
         $("textarea").eq(list).val(arr.text);
-
     })
 
 };
